@@ -16,20 +16,25 @@
         </form>
     </header>
     <main class="main-container">
-        <h3 id="main-title" class="main-title">Weather for </h3>
-        <div id="local-time" class="local-time">Local time: </div>
-        <div class="data-container">
-            <div class="tabs">
-                <button class="tab-button">Current weather</button>
-                <button class="tab-button">Forecasts</button>
-            </div>
-            <div class="current-data-container">
-                <div id="current-temp"></div>
-                <div id="current-weather"></div>
-                <div id="current-wind"></div>
-                <div id="sunset-sunrise-data">
-                    <div id="sunrise">Sunrise: 06h09</div>
-                    <div id="sunset">Sunset: 21h12</div>
+        <div id="message-area" class="message-area" visibility="hidden">
+            <span id="error-message" class="error-message"></span>
+        </div>
+        <div id="city-info" visibility="hidden">
+            <h3 id="city-title" class="city-title"></h3>
+            <div id="local-time" class="local-time"></div>
+            <div class="data-container">
+                <div class="tabs">
+                    <button class="tab-button">Current weather</button>
+                    <button class="tab-button">Forecasts</button>
+                </div>
+                <div class="current-data-container">
+                    <div id="current-temp"></div>
+                    <div id="current-weather"></div>
+                    <div id="current-wind"></div>
+                    <div id="sunset-sunrise-data">
+                        <div id="sunrise"></div>
+                        <div id="sunset"></div>
+                    </div>
                 </div>
             </div>
         </div>
