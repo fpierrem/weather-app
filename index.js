@@ -1,55 +1,66 @@
 const APIkey = '948a0394778bf6fc78ef09f68d2313db';
+const units = "metric";
 
-function convertTimeStamp(ts) {
-    let D = new Date(ts * 1000);
-    let hours = "0" + D.getHours();
-    let mins = "0" + D.getMinutes();
-    return hours.substr(-2) + "h" + mins.substr(-2);
-};
+// Get current weather data for given city
+async function getCurrentWeather(city) {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=${units}`)
+    return process(await response.json());
+}
 
+// async function getForecasts(city) {
+//     const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIkey}`)
+//     return process(await response.json());
+// }
+
+// Process data received from OpenWeather API
 function process(data) {
-    let weather = data.weather[0].description;
-    let wind = data.wind;
-    let clouds = data.clouds.all;
-    let temp = data.main.temp;
-    let max = data.main.temp_max;
-    let min = data.main.temp_min;
-    let feelsLike = data.main.feels_like;
-    let humidity = data.main.humidity;
-    let localTime = convertTimeStamp(data.dt);
-    let sunrise = convertTimeStamp(data.sys.sunrise);
-    let sunset = convertTimeStamp(data.sys.sunset);
+    console.log(data);
+    return {
+        weather: data.weather[0].description,
+        windSpeed: Math.round(data.wind.speed * 3600 / 1000),
+        windDirection: data.wind.deg,
+        clouds: data.clouds.all,
+        temp: Math.round(data.main.temp),
+        max: Math.round(data.main.temp_max),
+        min: Math.round(data.main.temp_min),
+        feelsLike: Math.round(data.main.feels_like),
+        humidity: data.main.humidity,
+        localTime: convertTimeStamp(data.dt),
+        sunrise: convertTimeStamp(data.sys.sunrise),
+        sunset: convertTimeStamp(data.sys.sunset)
+    };
 
-    return { weather, temp, max, min, feelsLike, wind, clouds, localTime, sunrise, sunset };
-}
-
-function displayData(data) {
-    currentTemp.innerHTML = data.temp;
+    // Convert Unix timestamp to human-readable time
+    function convertTimeStamp(ts) {
+        let D = new Date(ts * 1000);
+        let hours = "0" + D.getHours();
+        let mins = "0" + D.getMinutes();
+        return hours.substr(-2) + "h" + mins.substr(-2);
+    };
 };
 
-// function getInfo(city) {
-//     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}`)
-//         .then(response => response.json())
-//         .then(response => process(response))
-//         .then(data => displayData(data));    
-// };
-
-const form = document.getElementById('search-field');
-const currentTemp = document.getElementById('current-temp');
-
-// form.onsubmit = function() {
-//     let city = form["city"].value;
-//     getInfo(city);
-// };
-
-async function getInfo(city) {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}`)
-    const data = process(await response.json());
-    return data;
+function displayCityData(city,localTime) {
+    let mainTitle = document.getElementById('main-title');
+    let localTimeDisplay = document.getElementById('local-time');
+    mainTitle.innerHTML += city.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+    localTimeDisplay.innerHTML += localTime;
 }
+
+function displayCurrentData(data) {
+    const currentTemp = document.getElementById('current-temp');
+    const currentWeather = document.getElementById('current-weather');
+    const currentWind = document.getElementById('current-wind');
+    currentTemp.innerHTML = data.temp;
+    currentWeather.innerHTML = data.weather[0].toUpperCase() + data.weather.slice(1);
+    currentWind.innerHTML = data.windSpeed + ' km/h';
+};
+
+    
+const form = document.getElementById('search-field');
 
 form.onsubmit = async function() {
     let city = form["city"].value;
-    let data = await getInfo(city);
-    displayData(data);
+    let data = await getCurrentWeather(city);
+    displayCityData(city,data.localTime);
+    displayCurrentData(data);
 };

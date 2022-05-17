@@ -9,15 +9,29 @@
 </head>
 <body>
     <header>
-        Weather app
+        <h1>Weather app</h1>
         <form id="search-field" action="javascript:void(0);" autocomplete="off">
             <input type="text" placeholder="Enter a city" name="city" required autofocus>
-            <input type="submit">
+            <input type="submit" value="Go">
         </form>
     </header>
-    <main>
-        <div id="weather-data">x
-            <h2 id="current-temp"></h2>
+    <main class="main-container">
+        <h3 id="main-title" class="main-title">Weather for </h3>
+        <div id="local-time" class="local-time">Local time: </div>
+        <div class="data-container">
+            <div class="tabs">
+                <button class="tab-button">Current weather</button>
+                <button class="tab-button">Forecasts</button>
+            </div>
+            <div class="current-data-container">
+                <div id="current-temp"></div>
+                <div id="current-weather"></div>
+                <div id="current-wind"></div>
+                <div id="sunset-sunrise-data">
+                    <div id="sunrise">Sunrise: 06h09</div>
+                    <div id="sunset">Sunset: 21h12</div>
+                </div>
+            </div>
         </div>
     </main>
     <script src="index.js"></script>
