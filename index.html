@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Weather</title>
+</head>
+<body>
+    <header>
+        <h1>Weather app</h1>
+        <form id="search-field" action="javascript:void(0);" autocomplete="off">
+            <input type="text" placeholder="Enter a city" name="city" required autofocus>
+            <input type="submit" value="Go">
+        </form>
+    </header>
+    <main class="main-container">
+        <div id="message-area" class="message-area" visibility="hidden">
+            <span id="error-message" class="error-message"></span>
+        </div>
+        <div id="city-info" visibility="hidden">
+            <h3 id="city-title" class="city-title"></h3>
+            <div id="local-time" class="local-time"></div>
+            <div class="data-container">
+                <div class="tabs">
+                    <button class="tab-button">Current weather</button>
+                    <button class="tab-button">Forecasts</button>
+                </div>
+                <div class="current-data-container">
+                    <div id="current-temp"></div>
+                    <div id="current-weather"></div>
+                    <div id="current-wind"></div>
+                    <div id="sunset-sunrise-data">
+                        <div id="sunrise"></div>
+                        <div id="sunset"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="main.js"></script>
+</body>
+</html>
