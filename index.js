@@ -9,15 +9,16 @@ const cityInfo = document.getElementById("city-info");
 
 form.onsubmit = async function() {
     const city = form["city"].value;
-    let data = await getCurrentWeather(city);
-    if (data) {
+    try {
+        let coordinates = await getLatLon(city);
+        let data = await getWeather(coordinates.lat,coordinates.lon);
         hideErrorMessage();
         displayCityInfo();
-        let localTime = getTime()
         displayCityData(city,localTime);
         displayCurrentData(data);
     }
-    else {
+    catch(error) {
+        console.log(error);
         hideCityInfo();
         displayErrorMessage();
     };
@@ -41,10 +42,11 @@ function hideCityInfo() {
     cityInfo.style.visibility = "hidden";
 }
 
-function displayCityData(city,localTime) {
+function displayCityData(city, timezone) {
     let mainTitle = document.getElementById('city-title');
     let localTimeDisplay = document.getElementById('local-time');
     mainTitle.innerHTML = 'Weather for ' + city.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+    let now = now();
     localTimeDisplay.innerHTML = 'Local time: ' + localTime;
 }
 
@@ -62,10 +64,24 @@ function displayCurrentData(data) {
 };
 
 
-// Get current weather data for given city
-async function getCurrentWeather(city) {
+// Get coordinates using city name
+async function getLatLon(city) {
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=${units}`)
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIkey}`)
+        const data = await response.json();
+        console.log(data);
+        return {lat:data[0].lat,lon:data[0].lon};
+    }
+    catch(error) {
+        console.log(error);
+        return null;
+    };
+};
+
+// Get current weather data for given city
+async function getWeather(lat,lon) {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${APIkey}&units=${units}`)
         return process(await response.json());
     }
     catch(error) {
@@ -74,27 +90,26 @@ async function getCurrentWeather(city) {
     };
 };
 
-
 // Process data received from OpenWeather API
 function process(data) {
     console.log(data);
     return {
-        weather: data.weather[0].description,
-        windSpeed: Math.round(data.wind.speed * 3600 / 1000),
-        windDirection: data.wind.deg,
-        temp: Math.round(data.main.temp),
-        max: Math.round(data.main.temp_max),
-        min: Math.round(data.main.temp_min),
-        feelsLike: Math.round(data.main.feels_like),
-        humidity: data.main.humidity,
-        timezoneOffset: data.timezone,
-        sunrise: getTime(data.sys.sunrise, this.timezoneOffset),
-        sunset: getTime(data.sys.sunset, this.timezoneOffset)
+        weather: data.current.weather[0].description,
+        windSpeed: Math.round(data.current.wind_speed * 3600 / 1000),
+        windDirection: data.current.wind_deg,
+        temp: Math.round(data.current.temp),
+        // max: Math.round(data.main.temp_max),
+        // min: Math.round(data.main.temp_min),
+        // feelsLike: Math.round(data.main.feels_like),
+        humidity: data.current.humidity,
+        timezone: data.timezone,
+        sunrise: getTime(data.current.sunrise, this.timezone),
+        sunset: getTime(data.current.sunset, this.timezone)
     };
 };
 
 // Convert Unix UTC timestamp to human-readable time
-function getTime(timestamp, offset) {
+function getTime(timestamp, timezone) {
     let D = new Date(timestamp * 1000);
     let hours = "0" + D.getHours();
     let mins = "0" + D.getMinutes();
