@@ -1,50 +1,6 @@
 const APIkey = '948a0394778bf6fc78ef09f68d2313db';
 const units = "metric";
 
-// Get current weather data for given city
-async function getCurrentWeather(city) {
-    try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=${units}`)
-        return process(await response.json());
-    }
-    catch(error) {
-        console.log(error);
-        return null;
-    };
-};
-
-// async function getForecasts(city) {
-//     const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIkey}`)
-//     return process(await response.json());
-// }
-
-// Process data received from OpenWeather API
-function process(data) {
-    console.log(data);
-    return {
-        weather: data.weather[0].description,
-        windSpeed: Math.round(data.wind.speed * 3600 / 1000),
-        windDirection: data.wind.deg,
-        clouds: data.clouds.all,
-        temp: Math.round(data.main.temp),
-        max: Math.round(data.main.temp_max),
-        min: Math.round(data.main.temp_min),
-        feelsLike: Math.round(data.main.feels_like),
-        humidity: data.main.humidity,
-        localTime: convertTimeStamp(data.dt, data.timezone),
-        sunrise: convertTimeStamp(data.sys.sunrise, data.timezone),
-        sunset: convertTimeStamp(data.sys.sunset, data.timezone)
-    };
-
-    // Convert Unix timestamp to human-readable time
-    function convertTimeStamp(ts, tz) {
-        let D = new Date((ts) * 1000);
-        let hours = "0" + D.getHours();
-        let mins = "0" + D.getMinutes();
-        return hours.substr(-2) + "h" + mins.substr(-2);
-    };
-};
-
 // View module
 const form = document.getElementById('search-field');
 const messageArea = document.getElementById('message-area');
@@ -57,7 +13,8 @@ form.onsubmit = async function() {
     if (data) {
         hideErrorMessage();
         displayCityInfo();
-        displayCityData(city,data.localTime);
+        let localTime = getTime()
+        displayCityData(city,localTime);
         displayCurrentData(data);
     }
     else {
@@ -104,4 +61,50 @@ function displayCurrentData(data) {
     sunset.innerHTML = data.sunset;
 };
 
-    
+
+// Get current weather data for given city
+async function getCurrentWeather(city) {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=${units}`)
+        return process(await response.json());
+    }
+    catch(error) {
+        console.log(error);
+        return null;
+    };
+};
+
+
+// Process data received from OpenWeather API
+function process(data) {
+    console.log(data);
+    return {
+        weather: data.weather[0].description,
+        windSpeed: Math.round(data.wind.speed * 3600 / 1000),
+        windDirection: data.wind.deg,
+        temp: Math.round(data.main.temp),
+        max: Math.round(data.main.temp_max),
+        min: Math.round(data.main.temp_min),
+        feelsLike: Math.round(data.main.feels_like),
+        humidity: data.main.humidity,
+        timezoneOffset: data.timezone,
+        sunrise: getTime(data.sys.sunrise, this.timezoneOffset),
+        sunset: getTime(data.sys.sunset, this.timezoneOffset)
+    };
+};
+
+// Convert Unix UTC timestamp to human-readable time
+function getTime(timestamp, offset) {
+    let D = new Date(timestamp * 1000);
+    let hours = "0" + D.getHours();
+    let mins = "0" + D.getMinutes();
+    return hours.substr(-2) + "h" + mins.substr(-2);
+};
+
+// Get current time at location
+// function getCurrentTime(offset) {
+//     let D = new Date(ts * 1000);
+//     let hours = "0" + D.getHours();
+//     let mins = "0" + D.getMinutes();
+//     return hours.substr(-2) + "h" + mins.substr(-2);
+// };
