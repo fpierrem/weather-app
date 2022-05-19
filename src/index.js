@@ -56,9 +56,9 @@ function displayCurrentInfo(info) {
     const currentWind = document.getElementById('current-wind');
     const sunrise = document.getElementById('sunrise');
     const sunset = document.getElementById('sunset');
-    currentTemp.innerHTML = info.temp;
+    currentTemp.innerHTML = info.temp + '°C';
     currentWeather.innerHTML = info.weather[0].toUpperCase() + info.weather.slice(1);
     currentWind.innerHTML = info.windSpeed + ' km/h';
-    sunrise.innerHTML = info.sunrise;
-    sunset.innerHTML = info.sunset;
+    sunrise.innerHTML = 'Sunrise: ' + info.sunrise;
+    sunset.innerHTML = 'Sunset: ' + info.sunset;
 };
