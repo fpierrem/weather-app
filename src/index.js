@@ -15,6 +15,7 @@ form.onsubmit = async function() {
         displayCityInfo();
         loadCityInfo(city,info.timezone);
         displayCurrentInfo(info);
+        displayForecasts(info);
     }
     catch(error) {
         console.log(error);
@@ -56,9 +57,31 @@ function displayCurrentInfo(info) {
     const currentWind = document.getElementById('current-wind');
     const sunrise = document.getElementById('sunrise');
     const sunset = document.getElementById('sunset');
-    currentTemp.innerHTML = info.temp + '°C';
-    currentWeather.innerHTML = info.weather[0].toUpperCase() + info.weather.slice(1);
-    currentWind.innerHTML = info.windSpeed + ' km/h';
-    sunrise.innerHTML = 'Sunrise: ' + info.sunrise;
-    sunset.innerHTML = 'Sunset: ' + info.sunset;
+    currentTemp.innerHTML = info.current.temp + '°C';
+    currentWeather.innerHTML = info.current.weather[0].toUpperCase() + info.current.weather.slice(1);
+    currentWind.innerHTML = info.current.windSpeed + ' km/h';
+    sunrise.innerHTML = 'Sunrise: ' + info.current.sunrise;
+    sunset.innerHTML = 'Sunset: ' + info.current.sunset;
+};
+
+function displayForecasts(info) {
+    const forecastsGrid = document.getElementById('forecasts-container');
+    for (let i = 0; i <= 7; i++) {
+        const dailyForecast = document.createElement('div');
+        dailyForecast.className = 'daily-forecast'
+        const dailyDay = document.createElement('div');
+        dailyDay.innerHTML = (i === 0) ? "Today" : info.forecast[i].date ;
+        const dailyMin = document.createElement('div');
+        dailyMin.innerHTML = info.forecast[i].min + ' °C';
+        const dailyMax = document.createElement('div');
+        dailyMax.innerHTML = info.forecast[i].max + ' °C';
+        const dailyIcon = document.createElement('div');
+        dailyIcon.innerHTML = info.forecast[i].icon;
+        dailyForecast.append(dailyDay);
+        dailyForecast.append(dailyMin);
+        dailyForecast.append(dailyMax);
+        dailyForecast.append(dailyIcon);
+        forecastsGrid.append(dailyForecast);
+    };
+    console.log('done');
 };

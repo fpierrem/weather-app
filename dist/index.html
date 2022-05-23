@@ -16,17 +16,22 @@
         </form>
     </header>
     <main class="main-container">
+        <!-- Error message area -->
         <div id="message-area" class="message-area" visibility="hidden">
             <span id="error-message" class="error-message"></span>
         </div>
+        <!-- Results -->
         <div id="city-info" visibility="hidden">
+            <!-- City information (name, local time) -->
             <h3 id="city-title" class="city-title"></h3>
             <div id="local-time" class="local-time"></div>
+            <!-- Weather data container -->
             <div class="data-container">
                 <div class="tabs">
                     <button class="tab-button">Current weather</button>
                     <button class="tab-button">Forecasts</button>
                 </div>
+                <!-- Current weather -->
                 <div class="current-data-container">
                     <div id="current-temp"></div>
                     <div id="current-weather"></div>
@@ -34,6 +39,15 @@
                     <div id="sunset-sunrise-data">
                         <div id="sunrise"></div>
                         <div id="sunset"></div>
+                    </div>
+                </div>
+                <!-- Forecasts -->
+                <div id="forecasts-container" class="forecasts-container">
+                    <div class="row-headers">
+                        <div> </div>
+                        <div>Min temp</div>
+                        <div>Max temp</div>
+                        <div>Weather</div>
                     </div>
                 </div>
             </div>

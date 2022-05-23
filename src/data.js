@@ -33,16 +33,28 @@ const getWeather = async (lat,lon) => {
 // Process data received from OpenWeather API
 const process = (data) => {
     console.log(data);
-    return {
-        weather: data.current.weather[0].description,
-        windSpeed: Math.round(data.current.wind_speed * 3600 / 1000),
-        windDirection: data.current.wind_deg,
-        temp: Math.round(data.current.temp),
-        humidity: data.current.humidity,
+    const weather = {
         timezone: data.timezone,
-        sunrise: getTime(data.current.sunrise, data.timezone),
-        sunset: getTime(data.current.sunset, data.timezone)
+        current: {
+            weather: data.current.weather[0].description,
+            windSpeed: Math.round(data.current.wind_speed * 3600 / 1000),
+            windDirection: data.current.wind_deg,
+            temp: Math.round(data.current.temp),
+            humidity: data.current.humidity,
+            sunrise: getTime(data.current.sunrise, data.timezone),
+            sunset: getTime(data.current.sunset, data.timezone)
+        }
     };
+    weather['forecast'] = [];
+    for (let i = 0; i <= 7; i++) {
+        weather['forecast'][i] = {
+            date: getDate(data.daily[i].dt,data.timezone),
+            min: Math.round(data.daily[i].temp.min),
+            max: Math.round(data.daily[i].temp.max),
+            icon: data.daily[i].weather[0].description
+        };
+    };
+    return weather;
 };
 
 // Convert Unix UTC D to human-readable time
@@ -52,6 +64,13 @@ const getTime = (timestamp, timezone) => {
     let hours = "0" + localDateTime.hour;
     let mins = "0" + localDateTime.minute;
     return hours.substr(-2) + "h" + mins.substr(-2);
+};
+
+// Convert Unix UTC D to human-readable date
+const getDate = (timestamp, timezone) => {
+    let D = new Date(timestamp * 1000).toISOString();
+    let localDateTime = DateTime.fromISO(D).setZone(timezone);
+    return localDateTime.toFormat('LLL dd');
 };
 
 export { getLatLon,getWeather,getTime };
