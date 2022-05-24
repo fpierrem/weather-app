@@ -30,7 +30,6 @@ header {
 }
 
 .main-container {
-    background-color: bisque;
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -42,46 +41,58 @@ header {
 
 .results {
     display: none;
+    background-color: lightskyblue;
+    box-shadow: var(--shadow);
+    padding:1rem;
+    border-radius: 10px;
 }
 
 .city-name {
-    background-color: burlywood;
     text-align: center;
     width: 100%;
-}
-
-.local-time {
-    background-color: cornflowerblue;
 }
 
 .tabs {
     display: grid;
     grid-template-columns: repeat(2,1fr);
     gap:1rem;
-    background-color: blueviolet;
     padding: 1rem;
 }
 
 .tab-button {
-    width: 150px;
-    justify-self: center;
-    padding: 0.5rem;
+    outline:none;
+    background-color: white;
 }
 
 .data-container {
-    background-color: cornsilk;
     width: 100%;
     max-width: 700px;
     display: flex;
 }
 
 .current-data-container {
-    background-color: cadetblue;
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap:1rem;
+    gap:2rem;
     min-width:500px;
     max-width: 900px;
+    align-items: center;
+    justify-content: center;
+}
+
+#current-temp {
+    font-size: 38px;
+    font-weight: bold;
+}
+
+#current-weather-description {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#current-wind {
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .forecasts-container {
@@ -93,13 +104,11 @@ header {
     max-width: 900px;
 }
 
-.row-headers {
-    display: grid;
-    grid-template-rows: repeat(3,1fr);
-    width:100px;
-}
-
 .daily-forecast {
     display: grid;
     grid-template-rows: repeat(3,1fr);
+}
+
+.daily-day {
+    font-weight: bold;
 }

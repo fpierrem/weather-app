@@ -71,12 +71,14 @@ function displayCityInfo(city, timezone) {
 
 function loadCurrentData(info) {
     const currentTemp = document.getElementById('current-temp');
-    const currentWeather = document.getElementById('current-weather');
+    const currentWeatherIcon = document.getElementById('current-weather-icon');
+    const currentWeatherDescription = document.getElementById('current-weather-description');
     const currentWind = document.getElementById('current-wind');
     const sunrise = document.getElementById('sunrise');
     const sunset = document.getElementById('sunset');
     currentTemp.innerHTML = info.current.temp + '°C';
-    currentWeather.innerHTML = info.current.weather[0].toUpperCase() + info.current.weather.slice(1);
+    currentWeatherIcon.innerHTML = `<img src=${info.current.iconURL} width="100px" height="100px">`;
+    currentWeatherDescription.innerHTML = info.current.weather[0].toUpperCase() + info.current.weather.slice(1);
     currentWind.innerHTML = info.current.windSpeed + ' km/h';
     sunrise.innerHTML = 'Sunrise: ' + info.current.sunrise;
     sunset.innerHTML = 'Sunset: ' + info.current.sunset;
@@ -92,6 +94,7 @@ function createForecasts(info) {
         const dailyForecast = document.createElement('div');
         dailyForecast.className = 'daily-forecast'
         const dailyDay = document.createElement('div');
+        dailyDay.className = 'daily-day';
         dailyDay.innerHTML = (i === 0) ? "Today" : info.forecast[i].date ;
         const dailyMin = document.createElement('div');
         dailyMin.innerHTML = info.forecast[i].min + ' °C';

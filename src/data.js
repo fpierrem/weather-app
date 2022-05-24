@@ -37,6 +37,7 @@ const process = (data) => {
         timezone: data.timezone,
         current: {
             weather: data.current.weather[0].description,
+            iconURL: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`,
             windSpeed: Math.round(data.current.wind_speed * 3600 / 1000),
             windDirection: data.current.wind_deg,
             temp: Math.round(data.current.temp),
