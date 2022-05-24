@@ -40,7 +40,7 @@ function showCurrent() {
 
 function showForecasts() {
     currentData.style.display = "none";
-    forecastsGrid.style.display = "flex";
+    forecastsGrid.style.display = "grid";
 }
 
 function displayErrorMessage() {
@@ -98,7 +98,7 @@ function createForecasts(info) {
         const dailyMax = document.createElement('div');
         dailyMax.innerHTML = info.forecast[i].max + ' °C';
         const dailyIcon = document.createElement('div');
-        dailyIcon.innerHTML = `<img src=${info.forecast[i].iconURL}>`;
+        dailyIcon.innerHTML = `<img src=${info.forecast[i].iconURL} width="50" height="50">`;
         dailyForecast.append(dailyDay);
         dailyForecast.append(dailyMin);
         dailyForecast.append(dailyMax);

@@ -85,8 +85,10 @@ header {
 }
 
 .forecasts-container {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    gap:20px;
+    align-items: center;
     min-width:500px;
     max-width: 900px;
 }
