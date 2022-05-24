@@ -17,22 +17,25 @@
     </header>
     <main class="main-container">
         <!-- Error message area -->
-        <div id="message-area" class="message-area" visibility="hidden">
+        <div id="message-area" class="message-area">
             <span id="error-message" class="error-message"></span>
         </div>
         <!-- Results -->
-        <div id="city-info" visibility="hidden">
+        <div id="results" class="results">
             <!-- City information (name, local time) -->
-            <h3 id="city-title" class="city-title"></h3>
-            <div id="local-time" class="local-time"></div>
+            <div id="city-info">
+                <h3 id="city-name" class="city-name"></h3>
+                <div id="local-time" class="local-time"></div>
+                <!-- Tabs to switch between current weather and forecast -->
+                <div id="tabs" class="tabs">
+                    <button id="current-tab" class="tab-button">Current weather</button>
+                    <button id="forecasts-tab" class="tab-button">Forecasts</button>
+                </div>
+            </div>
             <!-- Weather data container -->
             <div class="data-container">
-                <div class="tabs">
-                    <button class="tab-button">Current weather</button>
-                    <button class="tab-button">Forecasts</button>
-                </div>
                 <!-- Current weather -->
-                <div class="current-data-container">
+                <div id="current-data-container" class="current-data-container">
                     <div id="current-temp"></div>
                     <div id="current-weather"></div>
                     <div id="current-wind"></div>

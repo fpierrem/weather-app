@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700;900&family=Open+Sans:wght@300;400;800&family=Rubik:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
 
 :root {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     --shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     background-color: whitesmoke;
 }
@@ -40,7 +40,11 @@ header {
     margin-top: 1rem;
 }
 
-.city-title {
+.results {
+    display: none;
+}
+
+.city-name {
     background-color: burlywood;
     text-align: center;
     width: 100%;
@@ -48,12 +52,6 @@ header {
 
 .local-time {
     background-color: cornflowerblue;
-}
-
-.data-container {
-    background-color: cornsilk;
-    width: 100%;
-    max-width: 700px;
 }
 
 .tabs {
@@ -70,16 +68,27 @@ header {
     padding: 0.5rem;
 }
 
+.data-container {
+    background-color: cornsilk;
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+}
+
 .current-data-container {
     background-color: cadetblue;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap:1rem;
+    min-width:500px;
+    max-width: 900px;
 }
 
 .forecasts-container {
     display: flex;
     flex-direction: row;
+    min-width:500px;
+    max-width: 900px;
 }
 
 .row-headers {

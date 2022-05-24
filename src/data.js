@@ -51,7 +51,7 @@ const process = (data) => {
             date: getDate(data.daily[i].dt,data.timezone),
             min: Math.round(data.daily[i].temp.min),
             max: Math.round(data.daily[i].temp.max),
-            icon: data.daily[i].weather[0].description
+            iconURL: `http://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png`
         };
     };
     return weather;
