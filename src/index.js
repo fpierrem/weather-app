@@ -1,17 +1,27 @@
+import './styles.css';
 import { DateTime } from "luxon";
 import { getLatLon,getWeather,getTime } from "./data";
 
+const DEFAULT_CITY = 'Honolulu';
 const form = document.getElementById('search-field');
 const messageArea = document.getElementById('message-area');
 const errorMessage = document.getElementById("error-message");
 const forecastsGrid = document.getElementById('forecasts-container');
 
-form.onsubmit = async function() {
-    const city = form["city"].value;
+document.addEventListener('DOMContentLoaded', () => {
+    loadCity(DEFAULT_CITY);
+    form.onsubmit = () => {
+        const city = form["city"].value;
+        loadCity(city);
+    };
+});
+
+async function loadCity(city) {
     try {
         let coordinates = await getLatLon(city);
         let info = await getWeather(coordinates.lat,coordinates.lon);
         hideErrorMessage();
+        loadBackground(info);
         loadCityInfo(city,info.timezone);
         loadCurrentData(info);
         loadForecasts(info);
@@ -20,7 +30,7 @@ form.onsubmit = async function() {
         console.log(error);
         displayErrorMessage();
     };
-};
+}
 
 function displayErrorMessage() {
     messageArea.style.display = "block";
@@ -30,6 +40,11 @@ function displayErrorMessage() {
 function hideErrorMessage() {
     messageArea.style.display = "block";
     errorMessage.innerHTML = ""
+}
+
+function loadBackground(info) {
+    console.log('function called');
+    document.getElementById('main-container').style.background = "url('../images/clear-sky.jpeg')no-repeat center center/cover";
 }
 
 function loadCityInfo(city, timezone) {
@@ -51,7 +66,7 @@ function loadCurrentData(info) {
     currentWeatherIcon.innerHTML = `<img src=${info.current.iconURL} width="100px" height="100px">`;
     currentWeatherDescription.innerHTML = info.current.weather[0].toUpperCase() + info.current.weather.slice(1);
     currentWind.innerHTML = info.current.windSpeed + ' km/h';
-    currentHumidity.innerHTML = info.current.humidity + '%';
+    currentHumidity.innerHTML = 'Humidity: ' + info.current.humidity + '%';
     sunrise.innerHTML = 'Sunrise: ' + info.current.sunrise;
     sunset.innerHTML = 'Sunset: ' + info.current.sunset;
 };
