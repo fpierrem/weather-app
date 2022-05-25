@@ -19,10 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadCity(city) {
     try {
         let coordinates = await getLatLon(city);
+        let country = coordinates.country;
         let info = await getWeather(coordinates.lat,coordinates.lon);
         hideErrorMessage();
         loadBackground(info);
-        loadCityInfo(city,info.timezone);
+        loadCityInfo(city,country,info.timezone);
         loadCurrentData(info);
         loadForecasts(info);
     }
@@ -30,27 +31,27 @@ async function loadCity(city) {
         console.log(error);
         displayErrorMessage();
     };
-}
+};
 
 function displayErrorMessage() {
     messageArea.style.display = "block";
     errorMessage.innerHTML = "We couldn't find that city. Did you spell it right?"
-}
+};
 
 function hideErrorMessage() {
     messageArea.style.display = "block";
     errorMessage.innerHTML = ""
-}
+};
 
 function loadBackground(info) {
     console.log('function called');
     document.getElementById('main-container').style.background = "url('../images/clear-sky.jpeg')no-repeat center center/cover";
-}
+};
 
-function loadCityInfo(city, timezone) {
+function loadCityInfo(city,country,timezone) {
     let cityName = document.getElementById('city-name');
     let localDateTimeDisplay = document.getElementById('local-date-time');
-    cityName.innerHTML = city.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+    cityName.innerHTML = city.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()) + ', ' + country;
     localDateTimeDisplay.innerHTML = DateTime.now().setZone(timezone).toLocaleString(DateTime.DATETIME_MED);
 };
 
@@ -63,9 +64,9 @@ function loadCurrentData(info) {
     const sunrise = document.getElementById('sunrise');
     const sunset = document.getElementById('sunset');
     currentTemp.innerHTML = info.current.temp + '°C';
-    currentWeatherIcon.innerHTML = `<img src=${info.current.iconURL} width="100px" height="100px">`;
+    currentWeatherIcon.innerHTML = `<img src=${info.current.iconURL} width="150px" height="150px">`;
     currentWeatherDescription.innerHTML = info.current.weather[0].toUpperCase() + info.current.weather.slice(1);
-    currentWind.innerHTML = info.current.windSpeed + ' km/h';
+    currentWind.innerHTML = 'Wind: ' + info.current.windSpeed + ' km/h ';
     currentHumidity.innerHTML = 'Humidity: ' + info.current.humidity + '%';
     sunrise.innerHTML = 'Sunrise: ' + info.current.sunrise;
     sunset.innerHTML = 'Sunset: ' + info.current.sunset;

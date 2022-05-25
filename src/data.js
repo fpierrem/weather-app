@@ -9,7 +9,7 @@ const getLatLon = async (city) => {
         const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIkey}`)
         const data = await response.json();
         console.log(data);
-        return {lat:data[0].lat,lon:data[0].lon};
+        return {lat:data[0].lat,lon:data[0].lon,country:data[0].country};
     }
     catch(error) {
         console.log(error);
