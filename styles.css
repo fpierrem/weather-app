@@ -3,21 +3,11 @@
 :root {
     font-family: 'Quicksand', sans-serif;
     --shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    background-color: whitesmoke;
+    background-color: lightskyblue;
 }
 
 * {
     margin: 0;
-}
-
-header {
-    background-color:white;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    gap: 1rem;
-    padding:1rem;
 }
 
 #search-field input {
@@ -30,6 +20,27 @@ header {
 }
 
 .main-container {
+    background-color: rgb(91, 92, 86);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.search-container {
+    background-color: rgb(5, 58, 25);
+    display: flex;
+    flex-direction: column;
+    align-items:left;
+    text-align:left;
+    gap: 1rem;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.city-info-container {
+    background-color: brown;
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -39,45 +50,25 @@ header {
     margin-top: 1rem;
 }
 
-.results {
-    display: none;
-    background-color: lightskyblue;
-    box-shadow: var(--shadow);
-    padding:1rem;
-    border-radius: 10px;
-}
-
 .city-name {
     text-align: center;
     width: 100%;
 }
 
-.tabs {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap:1rem;
-    padding: 1rem;
-}
-
-.tab-button {
-    outline:none;
-    background-color: white;
-}
-
-.data-container {
-    width: 100%;
-    max-width: 700px;
-    display: flex;
-}
-
 .current-data-container {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap:2rem;
-    min-width:500px;
-    max-width: 900px;
-    align-items: center;
-    justify-content: center;
+    background-color: coral;
+    display: flex;
+    flex-direction: line;
+    justify-content: space-between;
+}
+
+.main-current-data-container {
+    background-color:darkseagreen;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    min-width:200px;
+    max-width: 300px;
 }
 
 #current-temp {
@@ -90,16 +81,29 @@ header {
     font-weight: bold;
 }
 
+.additional-current-data-container {
+    align-self:flex-end;
+    background-color:darkturquoise;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    min-width:200px;
+    max-width: 400px;
+}
+
+
 #current-wind {
     font-size: 14px;
     font-weight: bold;
 }
 
 .forecasts-container {
+    background-color: darkcyan;
     display: grid;
     grid-template-columns: repeat(8,1fr);
     gap:20px;
     align-items: center;
+    text-align: center;
     min-width:500px;
     max-width: 900px;
 }

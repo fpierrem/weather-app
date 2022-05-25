@@ -5,52 +5,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Weather</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" integrity="sha384-/frq1SRXYH/bSyou/HUp/hib7RVN1TawQYja658FEOodR/FQBKVqT9Ol+Oz3Olq5" crossorigin="anonymous">
+    <title>Weather app</title>
 </head>
 <body>
-    <header>
-        <h1>Weather app</h1>
-        <form id="search-field" action="javascript:void(0);" autocomplete="off">
-            <input type="text" placeholder="Enter a city" name="city" required autofocus>
-            <input type="submit" value="Go">
-        </form>
-    </header>
     <main class="main-container">
-        <!-- Error message area -->
-        <div id="message-area" class="message-area">
-            <span id="error-message" class="error-message"></span>
+        <!-- Search and error message area -->
+        <div class="search-container">
+            <!-- Search form -->
+            <form id="search-field" class="search" action="javascript:void(0);" autocomplete="off">
+                <input type="text" placeholder="Search city" name="city" required autofocus>
+                <button type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+            <!-- Error message area -->
+            <div id="message-area" class="message-area">
+                <span id="error-message" class="error-message"></span>
+            </div>
         </div>
-        <!-- Results -->
-        <div id="results" class="results">
-            <!-- City information (name, local time) -->
-            <div id="city-info">
-                <h3 id="city-name" class="city-name"></h3>
-                <div id="local-time" class="local-time"></div>
-                <!-- Tabs to switch between current weather and forecast -->
-                <div id="tabs" class="tabs">
-                    <button id="current-tab" class="tab-button">Current weather</button>
-                    <button id="forecasts-tab" class="tab-button">Forecasts</button>
+        <!-- City information (name, local time) -->
+        <div class="city-info-container">
+            <h3 id="city-name" class="city-name"></h3>
+            <div id="local-date-time" class="local-date-time"></div>
+        </div>
+        <!-- Current weather -->
+        <div class="current-data-container">
+            <!-- Current weather - main data -->
+            <div class="main-current-data-container">
+                <div id="current-temp"></div>
+                <div id="current-weather">
+                    <div id="current-weather-icon"></div>
+                    <div id="current-weather-description"></div>
                 </div>
             </div>
-            <!-- Weather data container -->
-            <div class="data-container">
-                <!-- Current weather -->
-                <div id="current-data-container" class="current-data-container">
-                    <div id="current-temp"></div>
-                    <div id="current-weather">
-                        <div id="current-weather-icon"></div>
-                        <div id="current-weather-description"></div>
-                    </div>
-                    <div id="current-wind"></div>
-                    <div id="sunset-sunrise-data">
-                        <div id="sunrise"></div>
-                        <div id="sunset"></div>
-                    </div>
-                </div>
-                <!-- Forecasts -->
-                <div id="forecasts-container" class="forecasts-container">
-                </div>
+            <!-- Current weather - additional data -->
+            <div class="additional-current-data-container">
+                <div id="current-humidity"></div>
+                <div id="current-wind"></div>
+                <div id="sunrise"></div>
+                <div id="sunset"></div>
             </div>
+        </div>
+        <!-- Forecasts -->
+        <div id="forecasts-container" class="forecasts-container">
         </div>
     </main>
     <script src="main.js"></script>
