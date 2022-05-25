@@ -12,7 +12,7 @@ form.onsubmit = async function() {
         let coordinates = await getLatLon(city);
         let info = await getWeather(coordinates.lat,coordinates.lon);
         hideErrorMessage();
-        displayCityInfo(city,info.timezone);
+        loadCityInfo(city,info.timezone);
         loadCurrentData(info);
         loadForecasts(info);
     }
@@ -32,7 +32,7 @@ function hideErrorMessage() {
     errorMessage.innerHTML = ""
 }
 
-function displayCityInfo(city, timezone) {
+function loadCityInfo(city, timezone) {
     let cityName = document.getElementById('city-name');
     let localDateTimeDisplay = document.getElementById('local-date-time');
     cityName.innerHTML = city.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
