@@ -8,6 +8,7 @@ const getLatLon = async (city) => {
     try {
         const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIkey}`)
         const data = await response.json();
+        console.log(data);
         return {lat:data[0].lat,lon:data[0].lon};
     }
     catch(error) {
@@ -38,9 +39,9 @@ const process = (data) => {
         current: {
             weather: data.current.weather[0].description,
             iconURL: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`,
+            temp: Math.round(data.current.temp),
             windSpeed: Math.round(data.current.wind_speed * 3600 / 1000),
             windDirection: data.current.wind_deg,
-            temp: Math.round(data.current.temp),
             humidity: data.current.humidity,
             sunrise: getTime(data.current.sunrise, data.timezone),
             sunset: getTime(data.current.sunset, data.timezone)

@@ -4,11 +4,6 @@ import { getLatLon,getWeather,getTime } from "./data";
 const form = document.getElementById('search-field');
 const messageArea = document.getElementById('message-area');
 const errorMessage = document.getElementById("error-message");
-const results = document.getElementById("results");
-const currentData = document.getElementById("current-data-container");
-const cityInfo = document.getElementById("city-info");
-const currentTab = document.getElementById("current-tab");
-const forecastsTab = document.getElementById("forecasts-tab");
 const forecastsGrid = document.getElementById('forecasts-container');
 
 form.onsubmit = async function() {
@@ -17,31 +12,15 @@ form.onsubmit = async function() {
         let coordinates = await getLatLon(city);
         let info = await getWeather(coordinates.lat,coordinates.lon);
         hideErrorMessage();
-        showResults();
         displayCityInfo(city,info.timezone);
         loadCurrentData(info);
-        createForecasts(info);
-        showCurrent();
+        loadForecasts(info);
     }
     catch(error) {
         console.log(error);
-        hideResults();
         displayErrorMessage();
     };
 };
-
-forecastsTab.onclick = () => showForecasts();
-currentTab.onclick = () => showCurrent();
-
-function showCurrent() {
-    currentData.style.display = "grid";
-    forecastsGrid.style.display = "none";
-}
-
-function showForecasts() {
-    currentData.style.display = "none";
-    forecastsGrid.style.display = "grid";
-}
 
 function displayErrorMessage() {
     messageArea.style.display = "block";
@@ -53,38 +32,31 @@ function hideErrorMessage() {
     errorMessage.innerHTML = ""
 }
 
-function showResults() {
-    results.style.display = "block";
-}
-
-function hideResults() {
-    results.style.display = "none";
-}
-
 function displayCityInfo(city, timezone) {
     let cityName = document.getElementById('city-name');
-    let localTimeDisplay = document.getElementById('local-time');
-    cityName.innerHTML = 'Weather for ' + city.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
-    let localTime = getTime(DateTime.now().toMillis() / 1000, timezone);
-    localTimeDisplay.innerHTML = 'Local time: ' + localTime;
-}
+    let localDateTimeDisplay = document.getElementById('local-date-time');
+    cityName.innerHTML = city.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+    localDateTimeDisplay.innerHTML = DateTime.now().setZone(timezone).toLocaleString(DateTime.DATETIME_MED);
+};
 
 function loadCurrentData(info) {
     const currentTemp = document.getElementById('current-temp');
     const currentWeatherIcon = document.getElementById('current-weather-icon');
     const currentWeatherDescription = document.getElementById('current-weather-description');
     const currentWind = document.getElementById('current-wind');
+    const currentHumidity = document.getElementById('current-humidity');
     const sunrise = document.getElementById('sunrise');
     const sunset = document.getElementById('sunset');
     currentTemp.innerHTML = info.current.temp + '°C';
     currentWeatherIcon.innerHTML = `<img src=${info.current.iconURL} width="100px" height="100px">`;
     currentWeatherDescription.innerHTML = info.current.weather[0].toUpperCase() + info.current.weather.slice(1);
     currentWind.innerHTML = info.current.windSpeed + ' km/h';
+    currentHumidity.innerHTML = info.current.humidity + '%';
     sunrise.innerHTML = 'Sunrise: ' + info.current.sunrise;
     sunset.innerHTML = 'Sunset: ' + info.current.sunset;
 };
 
-function createForecasts(info) {
+function loadForecasts(info) {
     // Clean up any previously existing forecast elements
     document.querySelectorAll('.daily-forecast').forEach((element) => {
         if (element) {element.remove()};
