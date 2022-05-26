@@ -1,7 +1,6 @@
 import { DateTime } from "luxon";
 
 const APIkey = '948a0394778bf6fc78ef09f68d2313db';
-const units = "metric";
 
 // Get coordinates from city name by calling OpenWeather's Geocoding API
 const getLatLon = async (city) => {
@@ -18,7 +17,7 @@ const getLatLon = async (city) => {
 };
 
 // Get current weather data for given city
-const getWeather = async (lat,lon) => {
+const getWeather = async (lat,lon,units) => {
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${APIkey}&units=${units}`)
         const data = process(await response.json());
@@ -72,7 +71,7 @@ const getTime = (timestamp, timezone) => {
 const getDate = (timestamp, timezone) => {
     let D = new Date(timestamp * 1000).toISOString();
     let localDateTime = DateTime.fromISO(D).setZone(timezone);
-    return localDateTime.toFormat('LLL dd');
+    return localDateTime.toFormat('cccc');
 };
 
 export { getLatLon,getWeather,getTime };

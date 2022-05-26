@@ -2,25 +2,52 @@ import './styles.css';
 import { DateTime } from "luxon";
 import { getLatLon,getWeather,getTime } from "./data";
 
-const DEFAULT_CITY = 'Honolulu';
+const units = {
+    "metric": {
+        temp: "°C",
+        wind: "km/h"
+    },
+    "imperial": {
+        temp: "°F",
+        wind: "mph"
+    }
+};
+
+let system = "metric";
+let city = 'Honolulu';
 const form = document.getElementById('search-field');
 const messageArea = document.getElementById('message-area');
 const errorMessage = document.getElementById("error-message");
 const forecastsGrid = document.getElementById('forecasts-container');
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadCity(DEFAULT_CITY);
+    loadCity(city);
+    unitControl()
     form.onsubmit = () => {
-        const city = form["city"].value;
+        city = form["city"].value;
         loadCity(city);
     };
 });
+
+function unitControl() {
+    let selectors = document.querySelectorAll(".unit-button");
+    selectors.forEach((element) => {
+      element.onclick = () => {
+        selectors.forEach((e) => {
+          e.className = "unit-button";
+        });
+        element.classList.add("selected");
+        system = (element.innerHTML === '°C') ? "metric" : "imperial";
+        loadCity(city);
+      };
+    });
+};  
 
 async function loadCity(city) {
     try {
         let coordinates = await getLatLon(city);
         let country = coordinates.country;
-        let info = await getWeather(coordinates.lat,coordinates.lon);
+        let info = await getWeather(coordinates.lat,coordinates.lon,system);
         hideErrorMessage();
         loadBackground(info);
         loadCityInfo(city,country,info.timezone);
@@ -45,7 +72,7 @@ function hideErrorMessage() {
 
 function loadBackground(info) {
     console.log('function called');
-    document.getElementById('main-container').style.background = "url('../images/clear-sky.jpeg')no-repeat center center/cover";
+    document.getElementById('background-container').style.background = "url('../images/clear-sky.jpeg')no-repeat center center/cover";
 };
 
 function loadCityInfo(city,country,timezone) {
@@ -63,10 +90,10 @@ function loadCurrentData(info) {
     const currentHumidity = document.getElementById('current-humidity');
     const sunrise = document.getElementById('sunrise');
     const sunset = document.getElementById('sunset');
-    currentTemp.innerHTML = info.current.temp + '°C';
+    currentTemp.innerHTML = info.current.temp + units[system].temp;
     currentWeatherIcon.innerHTML = `<img src=${info.current.iconURL} width="150px" height="150px">`;
     currentWeatherDescription.innerHTML = info.current.weather[0].toUpperCase() + info.current.weather.slice(1);
-    currentWind.innerHTML = 'Wind: ' + info.current.windSpeed + ' km/h ';
+    currentWind.innerHTML = 'Wind: ' + info.current.windSpeed + units[system].wind;
     currentHumidity.innerHTML = 'Humidity: ' + info.current.humidity + '%';
     sunrise.innerHTML = 'Sunrise: ' + info.current.sunrise;
     sunset.innerHTML = 'Sunset: ' + info.current.sunset;
@@ -85,9 +112,9 @@ function loadForecasts(info) {
         dailyDay.className = 'daily-day';
         dailyDay.innerHTML = (i === 0) ? "Today" : info.forecast[i].date ;
         const dailyMin = document.createElement('div');
-        dailyMin.innerHTML = info.forecast[i].min + ' °C';
+        dailyMin.innerHTML = info.forecast[i].min + units[system].temp;
         const dailyMax = document.createElement('div');
-        dailyMax.innerHTML = info.forecast[i].max + ' °C';
+        dailyMax.innerHTML = info.forecast[i].max + units[system].temp;
         const dailyIcon = document.createElement('div');
         dailyIcon.innerHTML = `<img src=${info.forecast[i].iconURL} width="50" height="50">`;
         dailyForecast.append(dailyDay);
