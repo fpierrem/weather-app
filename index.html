@@ -9,52 +9,54 @@
     <title>Weather app</title>
 </head>
 <body>
-    <main class="main-container" id="main-container">
-        <div class="top-container">
-            <!-- Search and error message area -->
-            <div class="search-container">
-                <!-- Search form -->
-                <form id="search-field" class="search-field" action="javascript:void(0);" autocomplete="off">
-                    <input type="text" placeholder="Search city" name="city" required autofocus>
-                    <button type="submit">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </form>
-                <!-- Error message area -->
-                <div id="message-area" class="message-area">
-                    <span id="error-message" class="error-message"></span>
+    <main class="background-container" id="background-container">
+        <div class="main-container">
+            <div class="top-container">
+                <!-- Search and error message area -->
+                <div class="search-container">
+                    <!-- Search form -->
+                    <form id="search-field" class="search-field" action="javascript:void(0);" autocomplete="off">
+                        <input type="text" placeholder="Search city" name="city" required autofocus>
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                    <!-- Error message area -->
+                    <div id="message-area" class="message-area">
+                        <span id="error-message" class="error-message"></span>
+                    </div>
+                </div>
+                <!-- Unit selectors -->
+                <div class="unit-buttons-container">
+                    <span id="celsius" class="unit-button selected">°C</span>
+                    <span> | </span>
+                    <span id="fahrenheit" class="unit-button">°F</span>
                 </div>
             </div>
-            <!-- Units toggle switch -->
-            <div class="unit-buttons-container">
-                <span id="celsius" class="unit-button selected">°C</span>
-                <span> | </span>
-                <span id="fahrenheit" class="unit-button">°F</span>
+            <!-- City information (name, local time) -->
+            <div class="city-info-container">
+                <h3 id="city-name" class="city-name"></h3>
+                <div id="local-date-time" class="local-date-time"></div>
             </div>
-        </div>
-        <!-- City information (name, local time) -->
-        <div class="city-info-container">
-            <h3 id="city-name" class="city-name"></h3>
-            <div id="local-date-time" class="local-date-time"></div>
-        </div>
-        <!-- Current weather -->
-        <div class="current-data-container">
-            <!-- Current weather - main data -->
-            <div id="current-temp"></div>
-            <div class="current-weather">
-                <div id="current-weather-icon"></div>
-                <div id="current-weather-description"></div>
+            <!-- Current weather -->
+            <div class="current-data-container">
+                <!-- Current weather - main data -->
+                <div id="current-temp"></div>
+                <div class="current-weather">
+                    <div id="current-weather-icon"></div>
+                    <div id="current-weather-description"></div>
+                </div>
+                <!-- Current weather - additional data -->
+                <div class="additional-current-data-container">
+                    <div id="current-humidity"></div>
+                    <div id="current-wind"></div>
+                    <div id="sunrise"></div>
+                    <div id="sunset"></div>
+                </div>
             </div>
-            <!-- Current weather - additional data -->
-            <div class="additional-current-data-container">
-                <div id="current-humidity"></div>
-                <div id="current-wind"></div>
-                <div id="sunrise"></div>
-                <div id="sunset"></div>
+            <!-- Forecasts -->
+            <div id="forecasts-container" class="forecasts-container">
             </div>
-        </div>
-        <!-- Forecasts -->
-        <div id="forecasts-container" class="forecasts-container">
         </div>
     </main>
     <script src="bundle.js"></script>
