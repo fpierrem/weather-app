@@ -39,7 +39,7 @@ function displayErrorMessage() {
 };
 
 function hideErrorMessage() {
-    messageArea.style.display = "block";
+    messageArea.style.display = "none";
     errorMessage.innerHTML = ""
 };
 
