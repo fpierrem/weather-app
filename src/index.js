@@ -71,8 +71,8 @@ function hideErrorMessage() {
 };
 
 function loadBackground(info) {
-    console.log('function called');
-    document.getElementById('background-container').style.background = "url('../images/clear-sky.jpeg')no-repeat center center/cover";
+    // document.getElementById('background-container').style.background = "url('../images/clear-sky.jpeg')no-repeat center center/cover";
+    document.getElementById('background-container').style.backgroundColor = "skyblue";
 };
 
 function loadCityInfo(city,country,timezone) {
