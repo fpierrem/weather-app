@@ -10,18 +10,26 @@
 </head>
 <body>
     <main class="main-container" id="main-container">
-        <!-- Search and error message area -->
-        <div class="search-container">
-            <!-- Search form -->
-            <form id="search-field" class="search" action="javascript:void(0);" autocomplete="off">
-                <input type="text" placeholder="Search city" name="city" required autofocus>
-                <button type="submit">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </form>
-            <!-- Error message area -->
-            <div id="message-area" class="message-area">
-                <span id="error-message" class="error-message"></span>
+        <div class="top-container">
+            <!-- Search and error message area -->
+            <div class="search-container">
+                <!-- Search form -->
+                <form id="search-field" class="search-field" action="javascript:void(0);" autocomplete="off">
+                    <input type="text" placeholder="Search city" name="city" required autofocus>
+                    <button type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+                <!-- Error message area -->
+                <div id="message-area" class="message-area">
+                    <span id="error-message" class="error-message"></span>
+                </div>
+            </div>
+            <!-- Units toggle switch -->
+            <div class="unit-buttons-container">
+                <span id="celsius" class="unit-button selected">°C</span>
+                <span> | </span>
+                <span id="fahrenheit" class="unit-button">°F</span>
             </div>
         </div>
         <!-- City information (name, local time) -->
